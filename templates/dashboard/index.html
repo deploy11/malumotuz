@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">    
+    <link rel="stylesheet" href="{% static 'bootstrap-5.0.2-dist/css/bootstrap.min.css' %}">
+    <style>
+
+       span{
+        background: red;
+        padding: 5px;
+        color: white;
+        border-radius: 10px;
+       }
+    </style>
+</head>
+<body>
+    {% if user.username == "admin" %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container-fluid">
+          <a class="navbar-brand bg-light"  style="border-radius: 7px; padding: 10px;" href="{% url 'dash' %}">Malumot <span>Admin</span> </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <a href="{% url 'new' %}" class="nav-item">new</a>
+            </ul>
+            <form class="d-flex">
+            <div class="bg-light d-flex " style="padding: 7px; border-radius: 5px;">
+              <input class="form-control me-2" type="search" placeholder="Malumot izlash" aria-label="Search" name="q">
+              <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+      
+    
+      
+    <table class="table table-hover">
+        <tr>
+           <th>malumot nomi</th>
+           <th>malumot matni</th>
+           <th>malumot ustida ishladh</th>
+        </tr>
+        {% for malumot in malumot %}
+        <tr>
+            <td>{{ malumot.name }}</td>
+            <td>{{ malumot.text | slice:"30" }} ...</td>
+            <td><a class="btn btn-outline-success" href="{% url 'detaila' malumot.pk %}">Batafsil o`qish</a></td>
+        </tr> 
+        {% endfor %}
+    </table>
+    
+    <script src="{% static 'bootstrap-5.0.2-dist/js/bootstrap.min.js' %}"></script>
+    {% else %}
+    <h1>kechirasiz siz admin emassiz</h1>
+    {% endif %}
+</body>
+</html>
