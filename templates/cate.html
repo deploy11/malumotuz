@@ -1,0 +1,85 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">    
+    <link rel="stylesheet" href="{% static 'bootstrap-5.0.2-dist/css/bootstrap.min.css' %}">
+    <style>
+
+       span{
+        background: red;
+        padding: 5px;
+        color: white;
+        border-radius: 10px;
+       }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container-fluid">
+          <a class="navbar-brand bg-light"  style="border-radius: 7px; padding: 10px;" href="{% url 'home' %}">Malumot <span>uz</span> </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"  >
+                        filterlar
+                    </a>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="btn btn-outline-succ" href="{% url 'nomi'%}">Nomi bo`yicha</a>
+                        <a class="btn btn-outline-piramy" href="{% url 'matn'%}">matni bo`yicha</a>
+                        <a class="btn btn-outline-succ" href="{% url 'home'%}">oddiy bo`yicha </a>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      categoriya
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for category in category %}
+                      <li><a class="dropdown-item" href="{% url 'categ' %}?category={{ category.name }}">{{ category.name }}</a></li>
+
+                    {% endfor %}
+                    </ul>
+                  </li>
+                  
+            </ul>
+            <form class="d-flex">
+            <div class="bg-light d-flex " style="padding: 7px; border-radius: 5px;">
+              <input class="form-control me-2" type="search" placeholder="Malumot izlash" aria-label="Search" name="q">
+              <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+      
+    
+      
+    <table class="table table-hover">
+        <tr>
+           <th>malumot nomi</th>
+           <th>malumot matni</th>
+           <th>malumot haqida batafsil</th>
+        </tr>
+        {% for malumot in malumot %}
+        <tr>
+            <td>{{ malumot.name }}</td>
+            <td>{{ malumot.text |truncatewords:1 }} ...</td>
+            <td> <a class="btn btn-outline-success" href="{% url 'details' malumot.pk %}">Batafsil o`qish</a></td>
+        </tr> 
+        {% endfor %}
+    </table>
+    
+    <script src="{% static 'bootstrap-5.0.2-dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
